@@ -1,0 +1,17 @@
+A: BEGIN;
+A: UPDATE krediler SET kredi = kredi + 77 WHERE uye_id = 3;
+A: SELECT kredi FROM krediler WHERE uye_id = 3;
+ kredi 
+-------
+649
+(1 row)
+
+B: SELECT kredi FROM krediler WHERE uye_id = 3;
+ kredi 
+-------
+572
+(1 row)
+
+A: ROLLBACK;
+
+PostgreSQL kirli okumaya (dirty read) izin vermemektedir (varsayılan READ COMMITTED izolasyon seviyesinde commit edilmemiş veriler diğer oturumlar tarafından okunamaz).

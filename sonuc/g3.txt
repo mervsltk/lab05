@@ -1,0 +1,17 @@
+A:BEGIN; SELECT kredi FROM krediler WHERE uye_id = 5;
+BEGIN
+ kredi 
+-------
+   332
+(1 row)
+B: SELECT kredi FROM krediler WHERE uye_id = 5;
+ kredi 
+-------
+   332
+(1 row)
+
+ SELECT kredi FROM krediler WHERE uye_id = 5;
+ kredi 
+-------
+   342
+(1 row)

@@ -1,0 +1,5 @@
+A:
+ERROR:  new row for relation "krediler" violates check constraint "krediler_kredi_check"
+DETAIL:  Failing row contains (1, -99716).
+ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK

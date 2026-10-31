@@ -1,0 +1,11 @@
+-- =====================================================
+-- Föy 05 / Görev 1 — Atomik kredi transferi
+-- 1 numaralı üyeden 2 numaralı üyeye 50 kredi aktaran
+-- transaction'ı buraya yazın: BEGIN ... COMMIT bloğu içinde
+-- iki UPDATE. Başarısız transfer denemesinin transkripti
+-- sonuc/g1.txt dosyasına gidecek (bkz. föy).
+-- =====================================================
+BEGIN;
+UPDATE krediler SET kredi = kredi - 50 WHERE uye_id = 1;
+UPDATE krediler SET kredi = kredi + 50 WHERE uye_id = 2;
+COMMIT;

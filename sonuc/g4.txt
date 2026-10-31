@@ -1,0 +1,33 @@
+BEGIN;
+UPDATE krediler SET kredi = kredi + 40 WHERE uye_id = 9;
+COMMIT;
+SELECT kredi FROM krediler WHERE uye_id = 9;
+BEGIN
+UPDATE 1
+COMMIT
+ kredi 
+-------
+   931
+(1 row)
+
+vtysdb=# \q
+
+What's next:
+    Try Docker Debug for seamless, persistent debugging tools in any container or image → docker debug vtys-postgres
+    Learn more at https://docs.docker.com/go/debug-cli/
+PS C:\Users\mervs\Downloads\lab05-sablon-main\lab05-sablon-main> docker compose restart postgres
+PS C:\Users\mervs\Downloads\lab05-sablon-main\lab05-sablon-main> docker exec -it vtys-postgres psql -U vtys -d vtysdb
+psql (16.15 (Debian 16.15-1.pgdg13+2))
+Type "help" for help.
+
+vtysdb=# SELECT kredi FROM krediler WHERE uye_id = 9;
+ kredi 
+-------
+   931
+(1 row)
+SHOW shared_buffers;
+SELECT pid, state, query FROM pg_stat_activity;
+ shared_buffers 
+----------------
+ 128MB
+(1 row)

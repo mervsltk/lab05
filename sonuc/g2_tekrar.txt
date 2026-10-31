@@ -1,0 +1,13 @@
+B:SELECT kredi FROM krediler WHERE uye_id = 7;
+BEGIN
+ kredi 
+-------
+   739
+(1 row)
+A:UPDATE krediler SET kredi = kredi + 30 WHERE uye_id = 7;
+UPDATE 1
+B:SELECT kredi FROM krediler WHERE uye_id = 7;
+ kredi 
+-------
+   769
+(1 row)
