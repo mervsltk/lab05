@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# İşletim sistemi
+.DS_Store
+Thumbs.db
+
+# Üreteç çıktıları — kendi numaranızla yeniden üretilir, commit etmeyin
+veri/*.csv
+veri/*.sql
+veri/*.js
+veri/*.json
+veri/*.parquet
+veri/*.duckdb
+veri/*.duckdb.wal

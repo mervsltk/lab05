@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: vtys-postgres
+    environment:
+      POSTGRES_USER: vtys
+      POSTGRES_PASSWORD: vtys2026
+      POSTGRES_DB: vtysdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./veri:/veri
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: vtys-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ogrenci@firat.edu.tr
+      PGADMIN_DEFAULT_PASSWORD: vtys2026
+    ports:
+      - "5050:80"
+
+  # Kendinizi PUSH ETMEDEN kontrol edin — Actions dakikası harcamaz:
+  #     docker compose run --rm kontrol
+  # Aynı değerlendirici, aynı puan. Yalnız doğru sonucu aldığınızda push edin.
+  kontrol:
+    image: python:3.12-slim
+    profiles: ["arac"]
+    depends_on:
+      - postgres
+    environment:
+      PGHOST: "postgres"
+      PGPORT: "5432"
+      PGUSER: "vtys"
+      PGPASSWORD: "vtys2026"
+      PGDATABASE: "vtysdb"
+    volumes:
+      - .:/is
+      - pipcache:/root/.cache/pip
+    working_dir: /is
+    command: sh -c "pip install -q 'psycopg[binary]' && python kontrol/kontrol.py"
+
+volumes:
+  pipcache:
+  pgdata:

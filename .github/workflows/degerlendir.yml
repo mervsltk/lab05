@@ -1,0 +1,53 @@
+name: Otomatik Değerlendirme
+
+on:
+  push:
+    branches: [main]      # feedback dalinda kosmasin: Classroom 50'nin geri bildirim PR'i orada acilir
+  workflow_dispatch:
+
+# Öğrenci arka arkaya push ederse önceki koşuyu iptal et:
+# hem sonuç daha hızlı gelir hem Actions dakikası boşa gitmez.
+concurrency:
+  group: degerlendir-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  degerlendir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: vtys
+          POSTGRES_PASSWORD: vtys2026
+          POSTGRES_DB: vtysdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U vtys"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bağımlılıkları kur
+        run: pip install "psycopg[binary]"
+
+      - name: Değerlendir
+        env:
+          PGHOST: localhost
+          PGPORT: "5432"
+          PGUSER: vtys
+          PGPASSWORD: vtys2026
+          PGDATABASE: vtysdb
+        run: python kontrol/kontrol.py
